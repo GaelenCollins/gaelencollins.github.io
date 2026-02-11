@@ -2,8 +2,9 @@
    MODERN PORTFOLIO STYLES
    ============================================ */
 
-/* Import Modern Font */
+/* Import Modern Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap');
 
 /* CSS Variables for consistency */
 :root {
@@ -27,6 +28,50 @@
   --radius-lg: 20px;
   --transition-fast: 0.2s ease;
   --transition-med: 0.3s ease;
+}
+
+/* Light Mode Theme */
+[data-theme="light"] {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #e2e8f0;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --accent-primary: #0284c7;
+  --accent-secondary: #0891b2;
+  --accent-purple: #7c3aed;
+  --accent-glow: rgba(2, 132, 199, 0.25);
+  --accent-glow-purple: rgba(124, 58, 237, 0.2);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-subtle: rgba(2, 132, 199, 0.2);
+  --border-accent: rgba(2, 132, 199, 0.4);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 30px rgba(2, 132, 199, 0.1);
+  --shadow-glow-purple: 0 0 30px rgba(124, 58, 237, 0.1);
+}
+
+[data-theme="light"] body {
+  background-image: 
+    radial-gradient(ellipse at 20% 0%, rgba(2, 132, 199, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(124, 58, 237, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(8, 145, 178, 0.04) 0%, transparent 70%);
+}
+
+[data-theme="light"] body::before {
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(2, 132, 199, 0.05) 0%, transparent 25%),
+    radial-gradient(circle at 90% 80%, rgba(124, 58, 237, 0.04) 0%, transparent 25%);
+}
+
+[data-theme="light"] header {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.08),
+    0 0 40px rgba(2, 132, 199, 0.1),
+    0 0 40px rgba(124, 58, 237, 0.08);
+}
+
+[data-theme="light"] header::before {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-purple), var(--accent-secondary), var(--accent-primary));
 }
 
 /* Reset */
@@ -82,13 +127,14 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border-subtle);
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: background var(--transition-med), border-color var(--transition-med);
 }
 
 nav p {
@@ -97,11 +143,19 @@ nav p {
   color: var(--text-primary);
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
 nav a {
   color: var(--accent-primary);
   text-decoration: none;
   position: relative;
   transition: color var(--transition-fast);
+  font-weight: 500;
 }
 
 nav a::after {
@@ -129,6 +183,62 @@ nav p:first-child {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent-primary);
+  transform: scale(1.05);
+}
+
+.theme-toggle i {
+  position: absolute;
+  font-size: 1.1rem;
+  transition: all var(--transition-med);
+}
+
+/* Moon icon (visible in dark mode) */
+.theme-toggle .fa-moon {
+  color: var(--accent-primary);
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+.theme-toggle .fa-sun {
+  color: var(--accent-primary);
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+/* Light mode: show sun, hide moon */
+[data-theme="light"] .theme-toggle .fa-moon {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+[data-theme="light"] .theme-toggle .fa-sun {
+  opacity: 1;
+  transform: rotate(0deg);
 }
 
 /* ============================================
@@ -252,8 +362,9 @@ section {
 }
 
 section h2 {
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  font-weight: 700;
+  font-family: 'Exo 2', 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+  font-optical-sizing: auto;
   font-size: 1.75rem;
   color: var(--text-primary);
   margin-bottom: 1.5rem;
@@ -278,8 +389,9 @@ section h2::after {
 }
 
 section h3 {
-  font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Exo 2', 'Inter', system-ui, sans-serif;
   font-weight: 600;
+  font-optical-sizing: auto;
   font-size: 1.25rem;
   color: var(--text-primary);
   padding: 1rem 0 0.5rem;
@@ -289,9 +401,9 @@ section h3 {
 section dl {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 1rem 2rem;
+  gap: 1rem 3rem;
   padding: 1rem 0;
-  max-width: 900px;
+  width: 100%;
 }
 
 section dt {
@@ -323,6 +435,8 @@ section dd {
   padding: 0.25rem 0.75rem;
   background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.1));
   border-radius: var(--radius-sm);
+  white-space: nowrap;
+  justify-self: end;
 }
 
 /* Skills List with Icons */
@@ -340,8 +454,9 @@ section ul li {
   border: 1px solid var(--border-subtle);
   border-radius: 50px;
   position: relative;
-  transition: all var(--transition-fast);
+  transition: transform var(--transition-fast);
   font-weight: 500;
+  cursor: default;
 }
 
 section ul li::before {
@@ -356,14 +471,11 @@ section ul li::before {
 }
 
 section ul li:hover {
-  background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(6, 182, 212, 0.2) 100%);
-  border-color: var(--accent-primary);
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.25);
+  transform: translateY(-1px);
 }
 
 section ul li:hover::before {
-  transform: rotate(180deg);
+  transform: rotate(90deg);
 }
 
 /* Section Links */
@@ -464,6 +576,7 @@ section a:hover {
   color: var(--text-secondary);
   text-align: left;
   padding: 0.5rem 0.75rem 0.5rem 2rem;
+  cursor: default;
 }
 
 .card ul li::before {
@@ -472,9 +585,15 @@ section a:hover {
   font-weight: 900;
   color: var(--accent-secondary);
   font-size: 0.7rem;
+  transition: none;
 }
 
 .card ul li:hover {
+  transform: none;
+  background: rgba(14, 165, 233, 0.05);
+}
+
+.card ul li:hover::before {
   transform: none;
 }
 
@@ -488,12 +607,13 @@ footer {
   gap: 1rem;
   padding: 1.5rem 2rem;
   margin-top: 2rem;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-subtle);
   color: var(--text-secondary);
   font-size: 0.9rem;
+  transition: background var(--transition-med), border-color var(--transition-med);
 }
 
 footer a {
@@ -530,6 +650,17 @@ footer a:hover i {
     gap: 0.75rem;
     text-align: center;
     padding: 1rem;
+  }
+
+  .nav-right {
+    gap: 1rem;
+  }
+
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
   }
 
   header {
